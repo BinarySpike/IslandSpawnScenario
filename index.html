@@ -1,0 +1,109 @@
+<html>
+
+<head>
+    <title>Test</title>
+    <script type="application/javascript">
+        function getRandomIntInclusive(min, max) {
+            min = Math.ceil(min);
+            max = Math.floor(max);
+            //return 0;
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+
+        function countAliveNeighbors(grid, numSquares, _x, _y) {
+            var count = 0;
+            for (var y = -1; y < 2; y++)
+                for (var x = -1; x < 2; x++) {
+                    if (x == 0 && y == 0) continue; // skip ourself
+                    if (x + _x < 0 || x + _x >= numSquares || y + _y < 0 || y + _y >= numSquares) continue;
+                    var value = grid[y + _y][x + _x];
+                    if (grid[y + _y][x + _x]) count++;
+                }
+            return count;
+        }
+
+    </script>
+</head>
+
+<body>
+    <canvas id=drawCanvas height=800 width=800></canvas>
+    <script type="application/javascript">
+        const numSquares = 32;
+        const size = 21;
+        canvas = document.getElementById("drawCanvas").getContext("2d");
+
+        var grid = new Array(numSquares);
+        for (var i = 0; i < numSquares; i++) {
+            grid[i] = new Array(numSquares);
+        }
+
+        // init grid
+        for (var y = 0; y < numSquares; y++) {
+            for (var x = 0; x < numSquares; x++) {
+                grid[y][x] = getRandomIntInclusive(1, 100) < 55 ? true : false;
+                if (grid[y][x])
+                    canvas.fillStyle = "#835C3B";
+                else
+                    canvas.fillStyle = "#00FFFF";
+                canvas.fillRect(x * size, y * size, size, size);
+            }
+        }
+        
+        
+        debugger;
+        var newgrid = new Array(numSquares);
+        for (var i = 0; i < numSquares; i++) {
+            newgrid[i] = new Array(numSquares);
+        }
+        
+        for (var i = 0; i < 100; i++) {
+            for (var y = 0; y < numSquares; y++) {
+                for (var x = 0; x < numSquares; x++) {
+                    newgrid[y][x] = grid[y][x];
+                    count = countAliveNeighbors(grid, numSquares, x, y, false);
+                    if (count >= 5 && !grid[y][x])
+                        newgrid[y][x] = true;
+                    else if (count <= 3 && grid[y][x]) // ##################### RULES
+                        newgrid[y][x] = false;
+                }
+            } //#################################
+            for (var y = 0; y < numSquares; y++)
+                for (var x = 0; x < numSquares; x++)
+                    grid[y][x] = newgrid[y][x];
+            for (var x = 0; x < numSquares; x++) {
+                grid[0][x] = false;
+                grid[numSquares-1][x] = false;
+            }
+            for (var y = 0; y < numSquares; y++) {
+                grid[y][0] = false;
+                grid[y][numSquares-1] = false;
+            }
+        
+        
+        for (var y = 0; y < numSquares; y++) {
+            for (var x = 0; x < numSquares; x++) {
+                if (grid[y][x])
+                    canvas.fillStyle = "#835C3B";
+                else
+                    canvas.fillStyle = "#00FFFF";
+                canvas.fillRect(x * size, y * size, size, size);
+                
+                count = countAliveNeighbors(grid, numSquares, x, y);
+                canvas.fillStyle = "#000000";
+                canvas.fillText(count, x*size + 14, y*size + 18, size);
+                /*if (grid[y][x] && !newgrid[y][x]) {
+                    canvas.fillStyle = "#FF0000";
+                    canvas.fillRect(x * size + 16, y * size + 16, 8, 8);
+                }
+                if (!grid[y][x] && newgrid[y][x]) {
+                    canvas.fillStyle = "#00FF00";
+                    canvas.fillRect(x * size + 16, y * size + 16, 8, 8);
+                }*/
+            }
+        }
+            debugger;
+        }
+    </script>
+</body>
+
+</html>
