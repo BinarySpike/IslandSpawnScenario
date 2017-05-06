@@ -1,5 +1,9 @@
 require("config")
 require("util")
+require("entity_generator")
+require("spawn_generator")
+require("water_generator")
+require("island_generator")
 
 
 -- Player Created event
@@ -9,6 +13,7 @@ script.on_event(defines.events.on_player_created, function(event)
         player.insert{name="iron-axe", count=1}
         player.insert{name="burner-mining-drill", count = 2}
         player.insert{name="stone-furnace", count = 2}
+        player.insert{name="small-electric-pole", count = 2}
 
         if DEBUG then
             player.insert{name="landfill", count=2000}
