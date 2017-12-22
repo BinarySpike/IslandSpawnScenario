@@ -126,7 +126,7 @@ function get_island_tiles(surface, x1, y1, x2, y2)
             -- spawn entities
 
             -- transform tile
-            tile_type = "grass"
+            tile_type = "grass-1"
             
             if (not tiles[y][x]) then
                 if (count_two <= 5) then
