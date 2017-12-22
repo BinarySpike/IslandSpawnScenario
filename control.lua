@@ -41,7 +41,7 @@ script.on_event(defines.events.on_chunk_generated, function(event)
         entList = surface.find_entities({{x1, y1}, {x2, y2}})
 
         for i, ent in ipairs(entList) do
-            if ent.name ~= "player" then
+            if ent.valid and ent.name ~= "player" then
                 ent.destroy()
             end
         end

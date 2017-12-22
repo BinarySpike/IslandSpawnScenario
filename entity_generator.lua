@@ -23,7 +23,7 @@ end
 function spawn_built_ore(surface, x, y)
     local tile = surface.get_tile(x, y)
     
-    if (tile.name ~= "grass") then
+    if (tile.name ~= "grass-1") then
         return
     end
     
